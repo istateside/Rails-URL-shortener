@@ -17,14 +17,15 @@ begin
   elsif input == 1
     puts "Type in your shortened URL"
     shortened_url = gets.chomp
-    puts shortened_url
-    long_url = ShortenedUrl.find_by_short_url(shortened_url).long_url
-    Launchy.open("#{long_url}")
+    url_object = ShortenedUrl.find_by_short_url(shortened_url)
+    Launchy.open("#{url_object.long_url}")
+    p user
+    Visit.record_visit!(user, url_object)
   else
-    #raise
+    raise "Incorrect choice!"
   end
-  #rescue
-  #retry
+rescue RuntimeError
+  retry
 end
 
 
